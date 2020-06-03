@@ -1,6 +1,6 @@
 # metah06_condition-dependence-of-boldness
 
-This respository contains datasets and code relating to the meta-analysis study "Poor condition promotes high-risk behaviours but context-dependency is key: A systematic review and meta-analysis" Nicholas P. Moran, Alfredo Sánchez-Tójar, Holger Schielzeth, Klaus Reinhold.
+This respository contains datasets and code relating to the meta-analysis study "Poor nutritional condition promotes high-risk behaviours: A systematic review and meta-analysis" Nicholas P. Moran, Alfredo Sánchez-Tójar, Holger Schielzeth, Klaus Reinhold.
 
 Additional files and records can be found on the Open Science Framework, https://osf.io/3tphj/ (DOI 10.17605/OSF.IO/3TPHJ)
 
