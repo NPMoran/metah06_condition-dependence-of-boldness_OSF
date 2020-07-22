@@ -416,13 +416,11 @@ rr.Full.pub1 <- rma.mv(yi, VCV_rr_pub, mods = ~ Precision,
                         R = list(SpeciesSci = tree_branchmat),
                         method = "REML", 
                         data = dat_rr_pub)
-
 rr.Full.pub2 <- rma.mv(yi, VCV_rr_pub, mods = ~ Year.C,
                         random = list(~1 | SpeciesSci, ~1 | SpeciesCom, ~1 | StudyID, ~1 | ExperimentID, ~1 | EffectID),
                         R = list(SpeciesSci = tree_branchmat),
                         method = "REML", 
                         data = dat_rr_pub)
-
 rr.Full.pub3 <- rma.mv(yi, VCV_rr, mods = ~-1 + EffectSizesFromPublication,
                         random = list(~1 | SpeciesSci, ~1 | SpeciesCom, ~1 | StudyID, ~1 | ExperimentID, ~1 | EffectID),
                         R = list(SpeciesSci = tree_branchmat),
@@ -587,8 +585,4 @@ cvr.sen1 <- rma.mv(yi, VCV_cvr_sen1,
 
 summary(cvr.sen1)
 save(cvr.sen1, file = "./models/cvr.sen1.RData")
-
-
-
-###########################_################################
 

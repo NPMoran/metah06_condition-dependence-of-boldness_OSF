@@ -40,7 +40,7 @@ load("./models/cvr.sen1.RData")
 
 #loading package metaAidR, https://github.com/daniel1noble/metaAidR,
 library(metaAidR); library(forestmangr)
-#fix(I2) #Editing the function to (1) changing the name of the residual variance from obs to EffectID, (2) extract a residual heterogeneity estimate.
+#fix(I2) #Minor edits to the function to (1) changing the name of the residual variance from obs to EffectID, (2) extract a residual heterogeneity estimate.
 
 
 #loading packages for plotting
@@ -126,7 +126,7 @@ figS5$lower <- c(vr.SpeciesStudyExp$ci.lb, vr.Full$ci.lb, smd.SpeciesStudyExp$ci
 figS5$upper <- c(vr.SpeciesStudyExp$ci.ub, vr.Full$ci.ub, smd.SpeciesStudyExp$ci.ub, smd.Full$ci.ub)
 figS5$pos <- c(.75,1.5,3.5,4.25)
 figS5$labels <- c("lnVR (non-phylo)","lnVR (phylo)","SMDH (non-phylo)","SMDH (phylo)")
-figS5$k <- c("k = 1248","k = 1248","k = 1334","k = 1334")
+figS5$k <- c("k = 1249","k = 1249","k = 1334","k = 1334")
 figS5<-as.data.frame(figS5)
 
 
@@ -207,6 +207,51 @@ summary(dat_cvr$WildLabRear)
 rr.Full.exp.d
 cvr.Full.exp.d
 
+#Calculating R2marginal
+install.packages("devtools")
+install.packages("tidyverse")
+install.packages("metafor")
+install.packages("patchwork")
+install.packages("R.rsp")
+
+devtools::install_github("itchyshin/orchard_plot", subdir = "orchaRd", force = TRUE, build_vignettes = TRUE)
+
+library(orchaRd)
+library(patchwork)
+library(tidyverse)
+library(metafor)
+
+R2.rr.h2 <- r2_ml(rr.Full.h2); R2.rr.h2 <- t(as.data.frame(R2.rr.h2))
+R2.rr.h3 <- r2_ml(rr.Full.h3); R2.rr.h3 <- t(as.data.frame(R2.rr.h3))
+R2.rr.h4 <- r2_ml(rr.Full.h4); R2.rr.h4 <- t(as.data.frame(R2.rr.h4))
+R2.rr.h5.i <- r2_ml(rr.Full.h5.i); R2.rr.h5.i <- t(as.data.frame(R2.rr.h5.i))
+R2.rr.h5.ii <- r2_ml(rr.Full.h5.ii); R2.rr.h5.ii <- t(as.data.frame(R2.rr.h5.ii))
+R2.rr.pub1 <- r2_ml(rr.Full.pub1); R2.rr.h5.pub1 <- t(as.data.frame(R2.rr.pub1))
+R2.rr.pub2 <- r2_ml(rr.Full.pub2); R2.rr.h5.pub2 <- t(as.data.frame(R2.rr.pub2))
+R2.rr.pub3 <- r2_ml(rr.Full.pub3); R2.rr.h5.pub3 <- t(as.data.frame(R2.rr.pub3))
+R2.rr.exp.a <- r2_ml(rr.Full.exp.a); R2.rr.exp.a <- t(as.data.frame(R2.rr.exp.a))
+R2.rr.exp.b <- r2_ml(rr.Full.exp.b); R2.rr.exp.b <- t(as.data.frame(R2.rr.exp.b))
+R2.rr.exp.c <- r2_ml(rr.Full.exp.c); R2.rr.exp.c <- t(as.data.frame(R2.rr.exp.c))
+R2.rr.exp.d <- r2_ml(rr.Full.exp.d); R2.rr.exp.d <- t(as.data.frame(R2.rr.exp.d))
+
+R2_shinmethod <- rbind(R2.rr.h2,R2.rr.h3,R2.rr.h4,R2.rr.h5.i,R2.rr.h5.ii,
+                      R2.rr.pub1,R2.rr.pub2,R2.rr.pub3,
+                      R2.rr.exp.a,R2.rr.exp.b,R2.rr.exp.c,R2.rr.exp.d)
+R2_shinmethod <- 100*round(R2_shinmethod, digits = 4)
+
+R2.cvr.h2 <- r2_ml(cvr.Full.h2); R2.cvr.h2 <- t(as.data.frame(R2.cvr.h2))
+R2.cvr.h3 <- r2_ml(cvr.Full.h3); R2.cvr.h3 <- t(as.data.frame(R2.cvr.h3))
+R2.cvr.h4 <- r2_ml(cvr.Full.h4); R2.cvr.h4 <- t(as.data.frame(R2.cvr.h4))
+R2.cvr.h5.i <- r2_ml(cvr.Full.h5.i); R2.cvr.h5.i <- t(as.data.frame(R2.cvr.h5.i))
+R2.cvr.h5.ii <- r2_ml(cvr.Full.h5.ii); R2.cvr.h5.ii <- t(as.data.frame(R2.cvr.h5.ii))
+R2.cvr.exp.a <- r2_ml(cvr.Full.exp.a); R2.cvr.exp.a <- t(as.data.frame(R2.cvr.exp.a))
+R2.cvr.exp.b <- r2_ml(cvr.Full.exp.b); R2.cvr.exp.b <- t(as.data.frame(R2.cvr.exp.b))
+R2.cvr.exp.c <- r2_ml(cvr.Full.exp.c); R2.cvr.exp.c <- t(as.data.frame(R2.cvr.exp.c))
+R2.cvr.exp.d <- r2_ml(cvr.Full.exp.d); R2.cvr.exp.d <- t(as.data.frame(R2.cvr.exp.d))
+
+R2_shinmethod2 <- rbind(R2.cvr.h2,R2.cvr.h3,R2.cvr.h4,R2.cvr.h5.i,R2.cvr.h5.ii,
+                       R2.cvr.exp.a,R2.cvr.exp.b,R2.cvr.exp.c,R2.cvr.exp.d)
+R2_shinmethod2 <- 100*round(R2_shinmethod2, digits = 4)
 
 
 #Output for Table 2
@@ -217,17 +262,14 @@ output$QE<-c(rr.Full.h2$QE,rr.Full.h3$QE,rr.Full.h4$QE,rr.Full.h5.i$QE,rr.Full.h
 output$QEp<-c(rr.Full.h2$QEp,rr.Full.h3$QEp,rr.Full.h4$QEp,rr.Full.h5.i$QEp,rr.Full.h5.ii$QEp,rr.Full.pub1$QEp,rr.Full.pub2$QEp,rr.Full.pub3$QEp,rr.Full.exp.a$QEp,rr.Full.exp.b$QEp,rr.Full.exp.c$QEp,rr.Full.exp.d$QEp)
 output$QM<-c(rr.Full.h2$QM,rr.Full.h3$QM,rr.Full.h4$QM,rr.Full.h5.i$QM,rr.Full.h5.ii$QM,rr.Full.pub1$QM,rr.Full.pub2$QM,rr.Full.pub3$QM,rr.Full.exp.a$QM,rr.Full.exp.b$QM,rr.Full.exp.c$QM,rr.Full.exp.d$QM)
 output$QMp<-c(rr.Full.h2$QMp,rr.Full.h3$QMp,rr.Full.h4$QMp,rr.Full.h5.i$QMp,rr.Full.h5.ii$QMp,rr.Full.pub1$QMp,rr.Full.pub2$QMp,rr.Full.pub3$QMp,rr.Full.exp.a$QMp,rr.Full.exp.b$QMp,rr.Full.exp.c$QMp,rr.Full.exp.d$QMp)
-output$R2a<-c(sum(rr.Full.h2$sigma2),sum(rr.Full.h3$sigma2),sum(rr.Full.h4$sigma2),sum(rr.Full.h5.i$sigma2),sum(rr.Full.h5.ii$sigma2),sum(rr.Full.pub1$sigma2),sum(rr.Full.pub2$sigma2),sum(rr.Full.pub3$sigma2),sum(rr.Full.exp.a$sigma2),sum(rr.Full.exp.b$sigma2),sum(rr.Full.exp.c$sigma2),sum(rr.Full.exp.d$sigma2))
-output$R2b<-sum(rr.Full$sigma2)
-output$R2<-((output$R2b-output$R2a)/output$R2b) #using a psuedo r2 estimate as the sum of variance components in the moderator model and a percentage of summed variance components in the non-moderator model
 
 output<-as.data.frame(output)
 output$QE<-round(output$QE, digits = 2)
 output$QEp <- "< 0.0001" #as all p values are below 0.0001
 output$QM <- round(output$QM, digits = 2)
 output$QMp <- round(output$QMp, digits = 4)
-output$R2 <- round(output$R2, digits = 4)
-output$R2 <- 100*output$R2
+
+output<- cbind(output, R2_shinmethod)
 
 output <- transform(output, Residual = paste(QE, QEp, sep = " p "))
 output <- transform(output, Moderator = paste(QM, QMp, sep = " p = "))
@@ -243,17 +285,14 @@ output$QE<-c(cvr.Full.h2$QE,cvr.Full.h3$QE,cvr.Full.h4$QE,cvr.Full.h5.i$QE,cvr.F
 output$QEp<-c(cvr.Full.h2$QEp,cvr.Full.h3$QEp,cvr.Full.h4$QEp,cvr.Full.h5.i$QEp,cvr.Full.h5.ii$QEp,cvr.Full.exp.a$QEp,cvr.Full.exp.b$QEp,cvr.Full.exp.c$QEp,cvr.Full.exp.d$QEp)
 output$QM<-c(cvr.Full.h2$QM,cvr.Full.h3$QM,cvr.Full.h4$QM,cvr.Full.h5.i$QM,cvr.Full.h5.ii$QM,cvr.Full.exp.a$QM,cvr.Full.exp.b$QM,cvr.Full.exp.c$QM,cvr.Full.exp.d$QM)
 output$QMp<-c(cvr.Full.h2$QMp,cvr.Full.h3$QMp,cvr.Full.h4$QMp,cvr.Full.h5.i$QMp,cvr.Full.h5.ii$QMp,cvr.Full.exp.a$QMp,cvr.Full.exp.b$QMp,cvr.Full.exp.c$QMp,cvr.Full.exp.d$QMp)
-output$R2a<-c(sum(cvr.Full.h2$sigma2),sum(cvr.Full.h3$sigma2),sum(cvr.Full.h4$sigma2),sum(cvr.Full.h5.i$sigma2),sum(cvr.Full.h5.ii$sigma2),sum(cvr.Full.exp.a$sigma2),sum(cvr.Full.exp.b$sigma2),sum(cvr.Full.exp.c$sigma2),sum(cvr.Full.exp.d$sigma2))
-output$R2b<-sum(cvr.Full$sigma2)
-output$R2<-((output$R2b-output$R2a)/output$R2b) #using a psuedo r2 estimate as the sum of variance components in the moderator model and a percentage of summed variance components in the non-moderator model
 
 output<-as.data.frame(output)
 output$QE<-round(output$QE, digits = 2)
 output$QEp <- "< 0.0001" #as all p values are below 0.0001
 output$QM <- round(output$QM, digits = 2)
 output$QMp <- round(output$QMp, digits = 4)
-output$R2 <- round(output$R2, digits = 4)
-output$R2 <- 100*output$R2
+
+output<- cbind(output, R2_shinmethod2)
 
 output <- transform(output, Residual = paste(QE, QEp, sep = " p "))
 output <- transform(output, Moderator = paste(QM, QMp, sep = " p = "))
@@ -818,7 +857,7 @@ ggsave("figures/Fig.S4.jpg", width = 8, height = 12, units = "cm", Fig.S4, dpi =
 
 ###########################_################################
 
-##TIME-LAG BIAS PLOT ----
+##BONUS: TIME-LAG BIAS PLOT ----
 labels(rr.Full.pub2)
 rr.Full.pub2$formula.mods
 labels(dat_rr_pub)
@@ -857,3 +896,4 @@ Fig.TimeLag <- ggplot(figtimelag, aes(x = year, y = lnrr)) +
 Fig.TimeLag
 
 ggsave("figures/Fig.TimeLag.jpg", width = 20, height = 8, units = "cm", Fig.TimeLag, dpi = 600)
+

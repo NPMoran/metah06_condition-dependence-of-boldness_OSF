@@ -83,6 +83,9 @@ summary(dat$WildLabRear)
 dat$EffectSizesFromPublication[dat$EffectSizesFromPublication == "proportional only"] <- "yes"
 summary(dat$EffectSizesFromPublication)
 
+#Changing a species common name to it's synonym
+dat$SpeciesCom[dat$SpeciesCom == "Carpetan rock lizard"] <- "Iberian rock lizard" #synonym
+
 
 
 ###########################_################################
@@ -182,7 +185,8 @@ tree_branchmat <- vcv(tree_branch, cor = T) #vcv computes the expected variances
 tree_branchmat
 
 #Saving the tree
-write.tree(tree, file="datphylo.tre")
+write.tree(tree_branch, file="datphylo.tre")
+save(tree_branch, file = "datphylo.Rdata")
 plot.phylo(tree)
 plot.phylo(tree, type = "cladogram")
 plot.phylo(tree, type = "fan", cex = 0.5, node.depth = 1)
