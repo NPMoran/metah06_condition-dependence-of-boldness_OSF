@@ -75,7 +75,8 @@ fig1$lower <- c(cvr.SpeciesStudyExp$ci.lb, cvr.Full$ci.lb, rr.SpeciesStudyExp$ci
 fig1$upper <- c(cvr.SpeciesStudyExp$ci.ub, cvr.Full$ci.ub, rr.SpeciesStudyExp$ci.ub, rr.Full$ci.ub)
 fig1$pos <- c(.75,1.5,3.5,4.25)
 fig1$labels <- c("lnCVR (non-phylo)","lnCVR (phylo)","lnRR (non-phylo)","lnRR (phylo)")
-fig1$k <- c("k = 1235","k = 1235","k = 1297","k = 1297")
+fig1$k <- "k = "
+fig1$k2 <- c(cvr.SpeciesStudyExp$k, cvr.Full$k, rr.SpeciesStudyExp$k, rr.Full$k)
 fig1<-as.data.frame(fig1)
 
 Fig.1 <- ggplot(fig1, aes(x = estimate, y = pos)) +
@@ -88,9 +89,10 @@ Fig.1 <- ggplot(fig1, aes(x = estimate, y = pos)) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig1$lower, y = fig1$pos, xend = fig1$upper, yend = fig1$pos, size = 1) + 
   geom_point(size = 4, shape = 21, fill = "white") +
-  geom_text(aes(label=fig1$labels), hjust = "left", x =-0.52, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=fig1$k), hjust = "left", x =-0.52, vjust=0.7, size = 2.5) +
-  labs(x = "Effect Size, lnRR/lnCVR",
+  geom_text(aes(label=labels), hjust = "left", x =-0.52, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-0.52, vjust=0.7, size = 2.5) +
+  geom_text(aes(label=k2), hjust = "left", x =-0.46, vjust=0.7, size = 2.5) +
+  labs(x = "Effect size, lnRR/lnCVR",
        y = "") +
   xlim(-.5, .5) +
   ylim(0, 5) 
@@ -126,7 +128,8 @@ figS5$lower <- c(vr.SpeciesStudyExp$ci.lb, vr.Full$ci.lb, smd.SpeciesStudyExp$ci
 figS5$upper <- c(vr.SpeciesStudyExp$ci.ub, vr.Full$ci.ub, smd.SpeciesStudyExp$ci.ub, smd.Full$ci.ub)
 figS5$pos <- c(.75,1.5,3.5,4.25)
 figS5$labels <- c("lnVR (non-phylo)","lnVR (phylo)","SMDH (non-phylo)","SMDH (phylo)")
-figS5$k <- c("k = 1249","k = 1249","k = 1334","k = 1334")
+figS5$k <- "k = "
+figS5$k2 <- c(vr.SpeciesStudyExp$k, vr.Full$k, smd.SpeciesStudyExp$k, smd.Full$k)
 figS5<-as.data.frame(figS5)
 
 
@@ -140,9 +143,10 @@ Fig.S5 <- ggplot(figS5, aes(x = estimate, y = pos)) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = figS5$lower, y = figS5$pos, xend = figS5$upper, yend = figS5$pos, size = 1, colour = "black") + 
   geom_point(size = 4, shape = 21, fill = "white") +
-  geom_text(aes(label=figS5$labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=figS5$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) +
-  labs(x = "Effect Size, SMDH/lnVR",
+  geom_text(aes(label=labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface=3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) +
+  geom_text(aes(label=k2), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) +
+  labs(x = "Effect size, SMDH/lnVR",
        y = "") +
   xlim(-1, 1) +
   ylim(0, 5)
@@ -279,6 +283,22 @@ write.csv(output, "figures/Table2.csv",)
 
 #Output for Table 3
 output<-NULL
+output$estimate<-c(rr.Full.h2$beta,rr.Full.h3$beta,rr.Full.h4$beta,rr.Full.h5.i$beta,rr.Full.h5.ii$beta,rr.Full.pub1$beta,rr.Full.pub2$beta,rr.Full.pub3$beta,rr.Full.exp.a$beta,rr.Full.exp.b$beta,rr.Full.exp.c$beta,rr.Full.exp.d$beta)
+output$lb<-c(rr.Full.h2$ci.lb,rr.Full.h3$ci.lb,rr.Full.h4$ci.lb,rr.Full.h5.i$ci.lb,rr.Full.h5.ii$ci.lb,rr.Full.pub1$ci.lb,rr.Full.pub2$ci.lb,rr.Full.pub3$ci.lb,rr.Full.exp.a$ci.lb,rr.Full.exp.b$ci.lb,rr.Full.exp.c$ci.lb,rr.Full.exp.d$ci.lb)
+output$ub<-c(rr.Full.h2$ci.ub,rr.Full.h3$ci.ub,rr.Full.h4$ci.ub,rr.Full.h5.i$ci.ub,rr.Full.h5.ii$ci.ub,rr.Full.pub1$ci.ub,rr.Full.pub2$ci.ub,rr.Full.pub3$ci.ub,rr.Full.exp.a$ci.ub,rr.Full.exp.b$ci.ub,rr.Full.exp.c$ci.ub,rr.Full.exp.d$ci.ub)
+output<-as.data.frame(output)
+output$estimate <- round(output$estimate, digits = 2)
+output$lb <- round(output$lb, digits = 2)
+output$ub <- round(output$ub, digits = 2)
+output <- transform(output, Estimate = paste(estimate, lb, sep = " ["))
+output <- transform(output, Estimate = paste(Estimate, ub, sep = ", "))
+output$x <- ""
+output <- transform(output, Estimate = paste(Estimate, x, sep = "]"))
+write.csv(output, "figures/Table3.csv",)
+
+
+#Output for Table 4
+output<-NULL
 output$model<-c("cvr.Full.h2","cvr.Full.h3","cvr.Full.h4","cvr.Full.h5.i","cvr.Full.h5.ii","cvr.Full.exp.a","cvr.Full.exp.b","cvr.Full.exp.c","cvr.Full.exp.d")
 output$k<-c(cvr.Full.h2$k,cvr.Full.h3$k,cvr.Full.h4$k,cvr.Full.h5.i$k,cvr.Full.h5.ii$k,cvr.Full.exp.a$k,cvr.Full.exp.b$k,cvr.Full.exp.c$k,cvr.Full.exp.d$k)
 output$QE<-c(cvr.Full.h2$QE,cvr.Full.h3$QE,cvr.Full.h4$QE,cvr.Full.h5.i$QE,cvr.Full.h5.ii$QE,cvr.Full.exp.a$QE,cvr.Full.exp.b$QE,cvr.Full.exp.c$QE,cvr.Full.exp.d$QE)
@@ -297,22 +317,6 @@ output<- cbind(output, R2_shinmethod2)
 output <- transform(output, Residual = paste(QE, QEp, sep = " p "))
 output <- transform(output, Moderator = paste(QM, QMp, sep = " p = "))
 
-write.csv(output, "figures/Table3.csv",)
-
-
-#Output for Table 4
-output<-NULL
-output$estimate<-c(rr.Full.h2$beta,rr.Full.h3$beta,rr.Full.h4$beta,rr.Full.h5.i$beta,rr.Full.h5.ii$beta,rr.Full.pub1$beta,rr.Full.pub2$beta,rr.Full.pub3$beta,rr.Full.exp.a$beta,rr.Full.exp.b$beta,rr.Full.exp.c$beta,rr.Full.exp.d$beta)
-output$lb<-c(rr.Full.h2$ci.lb,rr.Full.h3$ci.lb,rr.Full.h4$ci.lb,rr.Full.h5.i$ci.lb,rr.Full.h5.ii$ci.lb,rr.Full.pub1$ci.lb,rr.Full.pub2$ci.lb,rr.Full.pub3$ci.lb,rr.Full.exp.a$ci.lb,rr.Full.exp.b$ci.lb,rr.Full.exp.c$ci.lb,rr.Full.exp.d$ci.lb)
-output$ub<-c(rr.Full.h2$ci.ub,rr.Full.h3$ci.ub,rr.Full.h4$ci.ub,rr.Full.h5.i$ci.ub,rr.Full.h5.ii$ci.ub,rr.Full.pub1$ci.ub,rr.Full.pub2$ci.ub,rr.Full.pub3$ci.ub,rr.Full.exp.a$ci.ub,rr.Full.exp.b$ci.ub,rr.Full.exp.c$ci.ub,rr.Full.exp.d$ci.ub)
-output<-as.data.frame(output)
-output$estimate <- round(output$estimate, digits = 2)
-output$lb <- round(output$lb, digits = 2)
-output$ub <- round(output$ub, digits = 2)
-output <- transform(output, Estimate = paste(estimate, lb, sep = " ["))
-output <- transform(output, Estimate = paste(Estimate, ub, sep = ", "))
-output$x <- ""
-output <- transform(output, Estimate = paste(Estimate, x, sep = "]"))
 write.csv(output, "figures/Table4.csv",)
 
 
@@ -344,11 +348,11 @@ fig2a$upper <- rr.Full.h2$ci.ub
 fig2a$pos <- c(2, 13:6, 1, 5:3)
 fig2a$labels <- c("Dispersal/migration", "Novel env (activity)",
                   "Novel env (exploration)","Novel env (feeding)",
-                  "Novel env (light-dark test)","Novel env (refuge emerg.)",
+                  "Novel env (light–dark test)","Novel env (refuge emerg.)",
                   "Novel env (refuge use)","Novel env (shoaling)",
                   "Novel object response","Other","Predation (feeding)",
                   "Predation (response)","Predation (shoaling)")
-fig2a$k <- c("k = 15","k = 248","k = 153","k = 331","k = 26","k = 39","k = 75","k = 29","k = 92","k = 16","k = 81","k = 172","k = 20")
+fig2a$k <- "k = "
 fig2a$cex.k <- c(15,248,153,331,26,39,75,29,92,16,81,172,20)
 fig2a$cex.k.area <- sqrt(fig2a$cex.k/pi)
 fig2b$estimate <- cvr.Full.h2$b
@@ -356,7 +360,7 @@ fig2b$lower <- cvr.Full.h2$ci.lb
 fig2b$upper <- cvr.Full.h2$ci.ub
 fig2b$pos <- fig2a$pos
 fig2b$labels <- fig2a$labels
-fig2b$k <- c("k = 13","k = 248","k = 153","k = 312","k = 24","k = 39","k = 75","k = 29","k = 88","k = 6","k = 61","k = 167","k = 20")
+fig2b$k <- "k = "
 fig2b$cex.k <- c(13,248,153,312,24,39,75,29,88,6,61,167,20)
 fig2b$cex.k.area <- sqrt(fig2b$cex.k/pi)
 fig2a<-as.data.frame(fig2a); fig2b<-as.data.frame(fig2b)
@@ -373,9 +377,10 @@ Fig.2a <- ggplot(fig2a, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +  
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig2a$lower, y = fig2a$pos, xend = fig2a$upper, yend = fig2a$pos, size = 0.60) + 
-  geom_text(aes(label=fig2a$labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=fig2a$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
-  labs(x = "Effect size, lnRR",
+  geom_text(aes(label=labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
+    labs(x = "Effect size, lnRR",
        y = "") +
   xlim(-1, 1) +
   ylim(0.25, 13.75)
@@ -393,7 +398,8 @@ Fig.2b <- ggplot(fig2b, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +  
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig2b$lower, y = fig2b$pos, xend = fig2b$upper, yend = fig2b$pos, size = 0.60) + 
-  geom_text(aes(label=fig2b$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnCVR",
        y = "") +
   xlim(-1, 1) +
@@ -415,8 +421,7 @@ fig2c$upper <- rr.Full.h3$ci.ub
 fig2c$pos <- c(4:1)
 fig2c$labels <- c("Female", "Male",
                   "Mixed","Unknown")
-fig2c$k <- c("k = 421", "k = 291",
-             "k = 120","k = 465")
+fig2c$k <- "k = "
 fig2c$cex.k <- c(421,291,120,465)
 fig2c$cex.k.area <- sqrt(fig2c$cex.k/pi)
 fig2d$estimate <- cvr.Full.h3$b
@@ -424,8 +429,7 @@ fig2d$lower <- cvr.Full.h3$ci.lb
 fig2d$upper <- cvr.Full.h3$ci.ub
 fig2d$pos <- fig2c$pos
 fig2d$labels <- fig2c$labels
-fig2d$k <- c("k = 401", "k = 276",
-             "k = 117","k = 441")
+fig2d$k <- "k = "
 fig2d$cex.k <- c(401,276,117,441)
 fig2d$cex.k.area <- sqrt(fig2d$cex.k/pi)
 fig2c<-as.data.frame(fig2c); fig2d<-as.data.frame(fig2d)
@@ -442,8 +446,9 @@ Fig.2c <- ggplot(fig2c, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +  
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig2c$lower, y = fig2c$pos, xend = fig2c$upper, yend = fig2c$pos, size = 0.60) + 
-  geom_text(aes(label=fig2c$labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=fig2c$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnRR",
        y = "") +
   xlim(-1, 1) +
@@ -462,7 +467,8 @@ Fig.2d <- ggplot(fig2d, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig2d$lower, y = fig2d$pos, xend = fig2d$upper, yend = fig2d$pos, size = 0.60) + 
-  geom_text(aes(label=fig2d$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnCVR",
        y = "") +
   xlim(-1, 1) +
@@ -483,8 +489,7 @@ fig2e$upper <- rr.Full.h4$ci.ub
 fig2e$pos <- c(3, 2, 4, 1, NA)
 fig2e$labels <- c("Adult", "Both",
                   "Juvenile","Unknown/Mixed", NA)
-fig2e$k <- c("k = 423", "k = 166",
-             "k = 601","k = 94", NA)
+fig2e$k <- "k = "
 fig2e$cex.k <- c(423,166,601,94,NA)
 fig2e$cex.k.area <- sqrt(fig2e$cex.k/pi)
 fig2f$estimate <- cvr.Full.h4$b
@@ -492,8 +497,7 @@ fig2f$lower <- cvr.Full.h4$ci.lb
 fig2f$upper <- cvr.Full.h4$ci.ub
 fig2f$pos <- fig2e$pos
 fig2f$labels <- fig2e$labels
-fig2f$k <- c("k = 402", "k = 166",
-             "k = 578","k = 89", NA)
+fig2f$k <- "k = "
 fig2f$cex.k <- c(402,166,578,89,NA)
 fig2f$cex.k.area <- sqrt(fig2f$cex.k/pi)
 fig2e<-as.data.frame(fig2e); fig2f<-as.data.frame(fig2f)
@@ -510,8 +514,9 @@ Fig.2e <- ggplot(fig2e, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig2e$lower, y = fig2e$pos, xend = fig2e$upper, yend = fig2e$pos, size = 0.60) + 
-  geom_text(aes(label=fig2e$labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=fig2e$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnRR",
        y = "") +
   xlim(-1, 1) +
@@ -530,7 +535,8 @@ Fig.2f <- ggplot(fig2f, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig2f$lower, y = fig2f$pos, xend = fig2f$upper, yend = fig2f$pos, size = 0.60) + 
-  geom_text(aes(label=fig2f$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnCVR",
        y = "") +
   xlim(-1, 1) +
@@ -556,7 +562,7 @@ fig3$lower <- rr.Full.pub3$ci.lb
 fig3$upper <- rr.Full.pub3$ci.ub
 fig3$pos <- c(1.20,2,2.80)
 fig3$labels <- c("Not reported","Partially reported","Fully reported")
-fig3$k <- c("k = 130","k = 360","k = 807")
+fig3$k <- "k = "
 fig3$cex.k <- c(130,360,807)
 fig3$cex.k.area <- sqrt(fig3$cex.k/pi)
 fig3<-as.data.frame(fig3)
@@ -573,9 +579,10 @@ Fig.3 <- ggplot(fig3, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +  
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig3$lower, y = fig3$pos, xend = fig3$upper, yend = fig3$pos, size = 0.6) + 
-  geom_text(aes(label=fig3$labels), hjust = "left", x =-0.52, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=fig3$k), hjust = "left", x =-0.52, vjust=0.7, size = 2.5) +
-  labs(x = "Effect Size, lnRR",
+  geom_text(aes(label=labels), hjust = "left", x =-0.52, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-0.52, vjust=0.7, size = 2.5) +
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.46, vjust=0.7, size = 2.5) +
+  labs(x = "Effect size, lnRR",
        y = "") +
   xlim(-0.5, 0.5) +
   ylim(0.5, 3.5)
@@ -601,8 +608,7 @@ fig4a$upper <- rr.Full.exp.a$ci.ub
 fig4a$pos <- c(5,3.667,2.334,1)
 fig4a$labels <- c("Combined", "Quality",
                   "Quantity","Starvation")
-fig4a$k <- c("k = 24", "k = 248",
-             "k = 390","k = 635")
+fig4a$k <- "k = "
 fig4a$cex.k <- c(24,248,390,635)
 fig4a$cex.k.area <- sqrt(fig4a$cex.k/pi)
 fig4b$estimate <- cvr.Full.exp.a$b
@@ -610,8 +616,7 @@ fig4b$lower <- cvr.Full.exp.a$ci.lb
 fig4b$upper <- cvr.Full.exp.a$ci.ub
 fig4b$pos <- fig4a$pos
 fig4b$labels <- fig4a$labels
-fig4b$k <- c("k = 24", "k = 246",
-             "k = 363","k = 602")
+fig4b$k <- "k = "
 fig4b$cex.k <- c(24,246,469,602)
 fig4b$cex.k.area <- sqrt(fig4b$cex.k/pi)
 fig4a<-as.data.frame(fig4a); fig4b<-as.data.frame(fig4b)
@@ -628,8 +633,9 @@ Fig.4a <- ggplot(fig4a, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig4a$lower, y = fig4a$pos, xend = fig4a$upper, yend = fig4a$pos, size = 0.60) + 
-  geom_text(aes(label=fig4a$labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=fig4a$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnRR",
        y = "") +
   xlim(-1, 1) +
@@ -648,7 +654,8 @@ Fig.4b <- ggplot(fig4b, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig4b$lower, y = fig4b$pos, xend = fig4b$upper, yend = fig4b$pos, size = 0.60) + 
-  geom_text(aes(label=fig4b$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnCVR",
        y = "") +
   xlim(-1, 1) +
@@ -673,8 +680,7 @@ fig4c$upper <- rr.Full.exp.b$ci.ub
 fig4c$pos <- c(4,2.5,1)
 fig4c$labels <- c("Dual", "Restriction",
                   "Supplementation")
-fig4c$k <- c("k = 60", "k = 1170",
-             "k = 67")
+fig4c$k <- "k = "
 fig4c$cex.k <- c(60,1170,67)
 fig4c$cex.k.area <- sqrt(fig4c$cex.k/pi)
 fig4d$estimate <- cvr.Full.exp.b$b
@@ -682,8 +688,7 @@ fig4d$lower <- cvr.Full.exp.b$ci.lb
 fig4d$upper <- cvr.Full.exp.b$ci.ub
 fig4d$pos <- fig4c$pos
 fig4d$labels <- fig4c$labels
-fig4d$k <- c("k = 60", "k = 1116",
-             "k = 59")
+fig4d$k <- "k = "
 fig4d$cex.k <- c(60,1116,59)
 fig4d$cex.k.area <- sqrt(fig4d$cex.k/pi)
 fig4c<-as.data.frame(fig4c); fig4d<-as.data.frame(fig4d)
@@ -700,8 +705,9 @@ Fig.4c <- ggplot(fig4c, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig4c$lower, y = fig4c$pos, xend = fig4c$upper, yend = fig4c$pos, size = 0.60) + 
-  geom_text(aes(label=fig4c$labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=fig4c$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnRR",
        y = "") +
   xlim(-1, 1) +
@@ -721,7 +727,8 @@ Fig.4d <- ggplot(fig4d, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig4d$lower, y = fig4d$pos, xend = fig4d$upper, yend = fig4d$pos, size = 0.60) + 
-  geom_text(aes(label=fig4d$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnCVR",
        y = "") +
   xlim(-1, 1) +
@@ -746,8 +753,7 @@ fig4e$upper <- rr.Full.exp.d$ci.ub
 fig4e$pos <- c(5,3.667,2.334,1)
 fig4e$labels <- c("Commercial", "Laboratory",
                   "Mixed","Wild")
-fig4e$k <- c("k = 139", "k = 711",
-             "k = 15","k = 432")
+fig4e$k <- "k = "
 fig4e$cex.k <- c(139,711,15,432)
 fig4e$cex.k.area <- sqrt(fig4e$cex.k/pi)
 fig4f$estimate <- cvr.Full.exp.d$b
@@ -755,8 +761,7 @@ fig4f$lower <- cvr.Full.exp.d$ci.lb
 fig4f$upper <- cvr.Full.exp.d$ci.ub
 fig4f$pos <- fig4e$pos
 fig4f$labels <- fig4e$labels
-fig4f$k <- c("k = 127", "k = 679",
-             "k = 15","k = 414")
+fig4f$k <- "k = "
 fig4f$cex.k <- c(127,679,15,414)
 fig4f$cex.k.area <- sqrt(fig4f$cex.k/pi)
 fig4e<-as.data.frame(fig4e); fig4f<-as.data.frame(fig4f)
@@ -773,8 +778,9 @@ Fig.4e <- ggplot(fig4e, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig4e$lower, y = fig4e$pos, xend = fig4e$upper, yend = fig4e$pos, size = 0.60) + 
-  geom_text(aes(label=fig4e$labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=fig4e$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=labels), hjust = "left", x =-1.04, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnRR",
        y = "") +
   xlim(-1, 1) +
@@ -794,7 +800,8 @@ Fig.4f <- ggplot(fig4f, aes(x = estimate, y = pos)) +
   geom_point(size = 0.9, shape = 19, fill = 1) +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = fig4f$lower, y = fig4f$pos, xend = fig4f$upper, yend = fig4f$pos, size = 0.60) + 
-  geom_text(aes(label=fig4f$k), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-1.04, vjust=0.7, size = 2.5) + 
+  geom_text(aes(label=cex.k), hjust = "left", x =-0.91, vjust=0.7, size = 2.5) + 
   labs(x = "Effect size, lnCVR",
        y = "") +
   xlim(-1, 1) +
@@ -826,7 +833,8 @@ figS4$lower <- c(cvr.Full$ci.lb, cvr.sen1$ci.lb, rr.Full$ci.lb, rr.sen1$ci.lb)
 figS4$upper <- c(cvr.Full$ci.ub, cvr.sen1$ci.ub, rr.Full$ci.ub, rr.sen1$ci.ub)
 figS4$pos <- c(.75,1.5,3.5,4.25)
 figS4$labels <- c("lnCVR (full)","lnCVR (reduced)","lnRR (full)","lnRR (reduced)")
-figS4$k <- c("k = 1235","k = 1211","k = 1297","k = 1272")
+figS4$k <- "k = "
+figS4$k2 <- c(cvr.Full$k, cvr.sen1$k, rr.Full$k, rr.sen1$k)
 figS4<-as.data.frame(figS4)
 
 
@@ -840,9 +848,10 @@ Fig.S4 <- ggplot(figS4, aes(x = estimate, y = pos)) +
   geom_point(size = 4, shape = 21, fill = "black") +
   geom_vline(xintercept = 0, linetype = 2, colour = "black", size = 0.75) +
   geom_segment(x = figS4$lower, y = figS4$pos, xend = figS4$upper, yend = figS4$pos, size = 1) + 
-  geom_text(aes(label=figS4$labels), hjust = "left", x =-0.52, vjust=-0.9, size = 2.5) +
-  geom_text(aes(label=figS4$k), hjust = "left", x =-0.52, vjust=0.7, size = 2.5) +
-  labs(x = "Effect Size, lnRR/lnCVR",
+  geom_text(aes(label=labels), hjust = "left", x =-0.52, vjust=-0.9, size = 2.5) +
+  geom_text(aes(label=k, fontface = 3), hjust = "left", x =-0.52, vjust=0.7, size = 2.5) +
+  geom_text(aes(label=k2), hjust = "left", x =-0.46, vjust=0.7, size = 2.5) +
+  labs(x = "Effect size, lnRR/lnCVR",
        y = "") +
   xlim(-.5, .5) +
   ylim(0, 5)
